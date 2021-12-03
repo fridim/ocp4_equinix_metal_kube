@@ -1,0 +1,13 @@
+---
+- name: Make .kube directory
+  ansible.builtin.file:
+    path: /root/.kube/
+    state: directory
+  when: ocp4_aio_deploy_type == 'sno'
+
+- name: Make rhacm the default cluster for bastion oc commands
+  when: ocp4_aio_deploy_type == 'sno'
+  ansible.builtin.copy:
+    remote_src: true
+    src: /root/sno-rhacm/auth/kubeconfig
+    dest: /root/.kube/config
